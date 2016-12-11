@@ -1,0 +1,32 @@
+background no
+out_to_console yes
+out_to_x no
+update_interval 3
+total_run_times 0
+use_spacer none
+ 
+TEXT
+^fg(\#C5C8C6)^i($HOME/.xmonad/.icons/arrow_big_01.xbm)^fg()^bg(\#C5C8C6)\
+^fg(\#121212)^i($HOME/.xmonad/.icons/cpu10.xbm) ${exec top -n 1 -b | grep "load average:" | awk '{print $10 $11 $12}'} \
+^fg(\#C12B4D)^i($HOME/.xmonad/.icons/arrow_big_01.xbm)^fg()^bg(\#C12B4D)\
+^fg(\#FFFBF8)^i($HOME/.xmonad/.icons/cat.xbm)  ${exec hostnamectl | head -7 | tail -1 | awk -F' ' '{ print $3 }'} \
+^fg(\#C5C8C6)^i($HOME/.xmonad/.icons/arrow_big_01.xbm)^fg()^bg(\#C5C8C6)\
+^fg(\#121212)^i($HOME/.xmonad/.icons/net_up_01.xbm) ${upspeedf enp2s0} \
+^fg(\#C12B4D)^i($HOME/.xmonad/.icons/net_down_01.xbm) ${downspeedf enp2
+s0} \
+^fg(\#C12B4D)^i($HOME/.xmonad/.icons/arrow_big_01.xbm)^fg()^bg(\#C12B4D)\
+^fg(\#FFFBF8)^i($HOME/.xmonad/.icons/temp6.xbm) ${exec  curl -s http://www.accuweather.com/en/br/uberlandia/33809/weather-forecast/33809\
+ | awk -F\' '/acm_RecentLocationsCarousel\.push/{print $12"°" }'| head -1} Udia \
+^fg(\#C5C8C6)^i($HOME/.xmonad/.icons/arrow_big_01.xbm)^fg()^bg(\#C5C8C6)\
+^fg(\#121212) ^i($HOME/.xmonad/.icons/uptime.xbm) ${exec uptime | sed 's/.* up //' | sed 's/[0-9]* us.*//' | sed 's/ day, /d /'\\
+ | sed 's/ days, /d /' | sed 's/:/h /' | sed 's/ min//'\
+ |  sed 's/,/m/' | sed 's/  / /'}\
+^fg(\#C12B4D)^i($HOME/.xmonad/.icons/arrow_big_01.xbm)^fg()^bg(\#C12B4D)\
+^ca(1, $HOME/.xmonad/Scripts/mpd.sh ) ^fg(\\#FFFBF8)^i($HOME/.xmonad/.icons/phones.xbm) ^ca() \
+${exec sh $HOME/.xmonad/Scripts/mpc.sh}\
+^fg(\#C5C8C6)^i($HOME/.xmonad/.icons/arrow_big_01.xbm)^fg()^bg(\#C5C8C6)\
+^fg(\#121212) ^i($HOME/.xmonad/.icons/vol4.xbm)  ${exec sh /home/josech/.xmonad/Scripts/vol.sh}   \
+
+
+
+

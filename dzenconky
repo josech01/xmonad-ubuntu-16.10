@@ -1,0 +1,32 @@
+background yes
+out_to_console yes
+out_to_x no
+update_interval 3
+use_xft yes 
+total_run_times 0
+use_spacer none
+
+TEXT
+ ^fg(\#C5C8C6)^i($HOME/.xmonad/.icons/arrow_big_01.xbm)^fg()^bg(\#C5C8C6)\
+ ^fg(\#121212)^i($HOME/.xmonad/.icons/disk.xbm) ${exec df -h / | awk 'NR==2 {total=$2; used=$3; print used" / "total}'} \
+ ^fg(\#C12B4D)^i($HOME/.xmonad/.icons/arrow_big_01.xbm)^fg()^bg(\#C12B4D)\
+ ^fg(\#FFFBF8)^i($HOME/.xmonad/.icons/mem4.xbm) ${exec free -h / | awk 'NR==2 {total=$2; used=$3; print used" / "total}'} \
+ ^fg(\#C5C8C6)^i($HOME/.xmonad/.icons/arrow_big_01.xbm)^fg()^bg(\#C5C8C6)\
+ ^fg(\#121212)^i($HOME/.xmonad/.icons/net_wired.xbm)\
+ ${exec ping -W 1 -c 1 8.8.8.8 >/dev/null 2>&1\
+ && echo On || echo Off} \
+ ^i($HOME/.xmonad/.icons/mail.xbm) ${exec sh /home/josech/.xmonad/mail.sh} \
+ ^fg(\#C12B4D)^i($HOME/.xmonad/.icons/arrow_big_01.xbm)^fg()^bg(\#C12B4D)\
+ ^i($HOME/.xmonad/.icons/temp.xbm) ${exec sensors | awk '/^Core/ {print $3}'\
+ | head -n1 | tr -d '+'}  \
+ ^i($HOME/.xmonad/.icons/cpu.xbm) ${cpu cpu0}%\
+ ^fg(\#C5C8C6)^i($HOME/.xmonad/.icons/arrow_big_01.xbm)^fg()^bg(\#C5C8C6)\
+ ^fg(\#121212)^i($HOME/.xmonad/.icons/pacman.xbm) ${exec checkupdates | wc -l }  \
+ ^i($HOME/.xmonad/.icons/arch1.xbm) ${exec pacaur -k | wc -l }\
+ ^fg(\#C12B4D)^i($HOME/.xmonad/.icons/arrow_big_01.xbm)^fg()^bg(\#C12B4D)\
+ ^ca(1, $HOME/.xmonad/Scripts/info-dzen.sh)^fg(\#FFFBF8)^i($HOME/.xmonad/.icons/user.xbm) Morgareth ^ca() \
+ ^fg(\#C5C8C6)^i($HOME/.xmonad/.icons/arrow_big_01.xbm)^fg()^bg(\#C5C8C6)\
+ ^ca(1, $HOME/.xmonad/Scripts/date.sh)^fg(\#121212)^i($HOME/.xmonad/.icons/clock2.xbm) ^ca() \
+ ${exec echo "$(TZ=America/Sao_Paulo date "+%T ,%A")"} 
+
+

@@ -1,0 +1,13 @@
+ fg(#C12B4D)^i(/home/josech/.dzen/arch.xbm)^fg() urxvt
+ ^fg(#C12B4D)^i(/home/josech/.dzen/fs_01.xbm)^fg() chromium
+ ^fg(#C12B4D)^i(/home/josech/.dzen/diskette.xbm)^fg() zathura
+ ^fg(#C12B4D)^i(/home/josech/.dzen/plug.xbm)^fg() lowriter
+ ^fg(#C12B4D)^i(/home/josech/.dzen/stop.xbm)^fg() localc
+ ^fg(#C12B4D)^i(/home/josech/.dzen/ac.xbm)^fg() loimpress
+ ^fg(#C12B4D)^i(/home/josech/.dzen/fox.xbm)^fg() gimp
+ ^fg(#C12B4D)^i(/home/josech/.dzen/mem.xbm)^fg() servoy
+----------
+ ^fg(#C12B4D)^i(/home/josech/.dzen/play.xbm)^fg() gmrun
+ ^fg(#C12B4D)^i(/home/josech/.dzen/full.xbm)^fg() systemctl suspend
+ ^fg(#C12B4D)^i(/home/josech/.dzen/half.xbm)^fg() systemctl reboot
+ ^fg(#C12B4D)^i(/home/josech/.dzen/empty.xbm)^fg() systemctl poweroff
