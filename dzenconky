@@ -27,6 +27,6 @@ TEXT
  ^ca(1, $HOME/.xmonad/Scripts/info-dzen.sh)^fg(\#FFFBF8)^i($HOME/.xmonad/.icons/user.xbm) Morgareth ^ca() \
  ^fg(\#C5C8C6)^i($HOME/.xmonad/.icons/arrow_big_01.xbm)^fg()^bg(\#C5C8C6)\
  ^ca(1, $HOME/.xmonad/Scripts/date.sh)^fg(\#121212)^i($HOME/.xmonad/.icons/clock2.xbm) ^ca() \
- ${exec echo "$(TZ=America/Sao_Paulo date "+%T ,%A")"} 
+ ${exec echo "$(TZ=America/Lima date "+%T ,%A")"} 
 
 
