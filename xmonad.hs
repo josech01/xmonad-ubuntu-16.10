@@ -20,6 +20,7 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys)
+import XMonad.Util.NamedScratchpad (NamedScratchpad(NS), namedScratchpadManageHook, namedScratchpadAction, customFloating)
 import XMonad.Util.SpawnOnce
 import System.IO
 import Control.Monad
@@ -75,48 +76,79 @@ tryPP h = def
         )
         , ppOrder  = \(ws:l:t:_) -> [l,ws]
         }
+myScratchpads = 
+  -- [ NS "terminal" "urxvtc -name terminal -e tmux attach"     (resource =? "terminal") myPosition
+  [ NS "terminal" "urxvt -name terminal"                                                 (resource =? "terminal") myTermPosition
+  , NS "tmux-terminal" "urxvt -name tmux-terminal -e sh -c 'tmux attach || tmux new'"            (resource =? "tmux-terminal") myTermPosition
+  
+  , NS "hackspace" "urxvt -name hackspace -e ssh hackspace -t tmux attach || tmux new"                                                (resource =? "hackspace") myTermPosition
+  , NS "quick-nautilus"    "nautilus ~/Documents"                                     (resource =? "quickNautilus") myTermPosition
+  , NS "music" "urxvt -name playlist -e ncmpcpp"                             (resource =? "music")    myPositionBiggerSE
+    -- , NS "clock" "urxvt -name clock -e ncmpcpp -s clock"                                   (resource =? "clock")    myPositionBiggerSW
+    -- , NS "clock" "urxvt -name browser -e ncmpcpp -s browser"                                   (resource =? "browser")    myPositionBiggerSE
+    -- , NS "media-library" "urxvt -name media-library -e ncmpcpp -s media-library"           (resource =? "media-library")    myPositionBiggerSE
+  , NS "alsa" "urxvt -name alsa -e alsamixer"                                            (resource =? "alsa")    myPositionBiggerSE
+  , NS "rtorrent" "urxvt -name rtorrent -e rtorrent"                                     (resource =? "rtorrent") myPosition
+  ] where
+  myPosition = customFloating $ W.RationalRect (1/3) (1/3) (1/3) (1/3)
+  myTermPosition = customFloating $ W.RationalRect (1/3) (1/5) (23/50) (7/20)
+  myPositionBiggerSW = customFloating $ W.RationalRect (1/2) (1/2) (1/2) (1/2)  
+  myPositionBiggerSE = customFloating $ W.RationalRect (1/5) (1/5) (1/3) (1/3)
+  
   
 ---------------------------------------------------------------------------
 -- additional key --
 ---------------------------------------------------------------------------
-myKeys = [
+myKeys =
+  [
     ((mod4Mask, xK_a),
-            spawn "firefox")
-        , ((mod4Mask, xK_p),
-            spawn  "dmenu_run -i -x 415 -y 330 -w 450 -h 20 -l 4 -fn 'Lucida Grande-8' -nb '#1D1F21' -nf '#C5C8C6' -sb '#C12B4D' -sf '#C5C8C6'")
-        , ((0, xK_Print),
-            spawn "maim ~/Imagens/$(date +%d-%m-%y_%H:%M:%S).png | notify-send -u low 'Screenshot saved to ~/Imagens'")
-        , ((mod4Mask, xK_Print),
-            spawn "maim -s --showcursor -b 3 ~/Imagens/$(date +%d-%m-%y_%H:%M:%S).png | notify-send -u low 'Screenshot saved to ~/Imagens'")
-        , ((mod4Mask, xK_t),
-            spawn "Thunar")
-        , ((mod4Mask, xK_m),
-            spawn "telegram-desktop")
-        , ((0, xK_Insert),
-            pasteSelection)
-        , ((mod4Mask, xK_s),
-            spawn "emacs")
-        , ((mod4Mask, xK_n),
-            spawn "nitrogen")
- --       , ((0, xK_F4), spawn
- --           "xkill")
-        , ((mod4Mask, xK_f),
-            sinkAll)
-        , ((mod4Mask, xK_x),
-            killAll)
-        , ((mod4Mask, xK_y), spawn
+      spawn "firefox")
+  , ((mod4Mask, xK_p),
+     spawn  "dmenu_path -i -x 415 -y 330 -w 450 -h 20 -l 4 -fn 'Lucida Grande-8' -nb '#1D1F21' -nf '#C5C8C6' -sb '#C12B4D' -sf '#C5C8C6'")
+  , ((0, xK_Print),
+      spawn "maim ~/Imagens/$(date +%d-%m-%y_%H:%M:%S).png | notify-send -u low 'Screenshot saved to ~/Imagens'")
+  , ((mod4Mask, xK_Print),
+      spawn "maim -s --showcursor -b 3 ~/Imagens/$(date +%d-%m-%y_%H:%M:%S).png | notify-send -u low 'Screenshot saved to ~/Imagens'")
+  , ((mod4Mask, xK_t),
+      spawn "nautilus")
+  , ((mod4Mask, xK_m),
+      spawn "telegram-desktop")
+  , ((0, xK_Insert),
+      pasteSelection)
+  , ((mod4Mask, xK_s),
+      spawn "emacs")
+  , ((mod4Mask, xK_n),
+      spawn "nitrogen")
+    --       , ((0, xK_F4), spawn
+    --           "xkill")
+  , ((mod4Mask, xK_f),
+      sinkAll)
+  , ((mod4Mask, xK_x),
+      killAll)
+  , ((mod4Mask, xK_y), spawn
            "xclip -o -se p | xclip -i -se c")
-        , ((mod4Mask, xK_Down), spawn
-           "amixer -D pulse sset Master 5%-")
-        , ((mod4Mask, xK_Up), spawn
-            "amixer -D pulse sset Master 5%+")
-        , ((mod4Mask, xK_b), spawn 
-            "brave")
-        , ((mod4Mask, xK_q), spawn
-           "killall dzen2; xmonad --recompile; xmonad --restart")]
-
----------------------------------------------------------------------------
--- layout tiling --
+  , ((mod4Mask, xK_Down), spawn
+      "amixer -D pulse sset Master 5%-")
+  , ((mod4Mask, xK_Up), spawn
+                        "amixer -D pulse sset Master 5%+")
+  , ((mod4Mask, xK_b), spawn 
+                       "brave")
+  , ((mod4Mask, xK_q), spawn
+                       "killall dzen2; xmonad --recompile; xmonad --restart")
+    -- Scratchpads
+  , ((mod4Mask, xK_g), namedScratchpadAction myScratchpads "tmux-terminal")
+  -- , ("M-g",               namedScratchpadAction myScratchpads "tmux-terminal")
+  -- , ("M-S-f",               namedScratchpadAction myScratchpads "quick-nautilus")
+  -- , ("M-C-h",               namedScratchpadAction myScratchpads "hackspace")
+  -- , ("M-C-h",               namedScratchpadAction myScratchpads "hackspace")
+  -- , ("M-M1-b",            namedScratchpadAction myScratchpads "rtorrent")
+  , ((mod4Mask, xK_n), namedScratchpadAction myScratchpads "music")
+  -- , ("M-S-a",             namedScratchpadAction myScratchpads "alsa")
+  ]
+  
+  
+  ---------------------------------------------------------------------------
+  -- layout tiling --
 ---------------------------------------------------------------------------
 
 myLayout = avoidStruts $ smartBorders (  sGrid ||| sSpiral ||| sCircle ||| sTall ||| Mirror sTall ||| Full )
@@ -148,9 +180,9 @@ main = do
     bar3 <- spawnPipe "conky -c ~/.xmonad/conky_dzen2 | dzen2 -p -ta r -e 'button3=' -fn 'Exo 2-7:bold'  -h 21 -w 1500 -y 1220 -x 60"
     bar4 <- spawnPipe "sh /home/josech/.xmonad/Scripts/menu.sh"
     xmonad $ def
-        { manageHook = myApps <+>  manageDocks <+> manageHook def
+        { manageHook = myApps <+>  manageDocks <+> namedScratchpadManageHook myScratchpads <+>manageHook def
     , layoutHook = myLayout 
-    , borderWidth = 1
+    , borderWidth = 2
     , normalBorderColor = "#1f1f1f"
     , focusedBorderColor = "red"
     , terminal = "urxvt"

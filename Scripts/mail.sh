@@ -1,5 +1,5 @@
-USER=
-PASS= 
+USER="daisuketsu1@gmail.com"
+PASS="Sistemasuni"
 
 COUNT=`curl -su $USER:$PASS https://mail.google.com/mail/feed/atom || echo "<fullcount>unknown number of</fullcount>"`
 COUNT=`echo "$COUNT" | grep -oPm1 "(?<=<fullcount>)[^<]+" `
